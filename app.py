@@ -11,7 +11,12 @@ response_instructions = '''\nReturn the response in a structured mannner in pure
 
 response = client.models.generate_content(
     model = "gemini-2.5-flash",
-    contents = user_input + response_instructions
-    )
+    contents = user_input + response_instructions,
+    config = genai.types.GenerateContentConfig(
+        response_mime_type="application/json")
+)
+
+with open("./response.json", 'w') as response_file:
+    response_file.write(response.text)
 
 print("Done!")
