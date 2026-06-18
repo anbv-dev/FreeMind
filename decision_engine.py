@@ -6,7 +6,9 @@ import json
 
 # Parsing API Key Securely
 load_dotenv()
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+
+api_key = st.secrets.get("GEMINI_API_KEY") if hasattr(st, "secrets") else os.getenv("GEMINI_API_KEY")
+client = genai.Client(api_key=api_key)
 
 # Response Schema for JSON output
 class ResponseFormat(BaseModel):
