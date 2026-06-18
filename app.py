@@ -1,5 +1,6 @@
 import streamlit as st
 from decision_engine import get_response, model
+import time
 
 # Page title and favicon
 st.set_page_config(page_title="FreeMind", page_icon="./source/favicon.ico")
@@ -13,9 +14,13 @@ st.divider()
 with st.form(key="prompt_window"):
 
     user_input = st.text_input("Ask anything that's troubling you...")
-    st.caption(f"Model: {model}")
 
-    if st.form_submit_button("Ask"):
+    box = st.container(horizontal=True, vertical_alignment="center")
+    ask_button = box.form_submit_button("Ask")
+
+    box.caption(f"Model: {model}")
+
+    if ask_button:
 
         with st.spinner("Finding the optimal solution to your issue..."):
             response = get_response(user_input)
@@ -35,3 +40,9 @@ with st.form(key="prompt_window"):
 
             with st.expander(label="Advice"):
                 st.write(response['advice'])
+
+            st.badge(f"Confidence Score:  {response['confidence_score']}", color='yellow')
+            confidence_bar = st.progress(0)
+            for i in range (response['confidence_score'] * 10):
+                time.sleep(0.01)
+                confidence_bar.progress(i + 1)
