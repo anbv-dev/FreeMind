@@ -1,5 +1,5 @@
 import streamlit as st
-from decision_engine import get_response
+from decision_engine import get_response, model
 
 # Page title and favicon
 st.set_page_config(page_title="FreeMind", page_icon="./source/favicon.ico")
@@ -13,12 +13,13 @@ st.divider()
 with st.form(key="prompt_window"):
 
     user_input = st.text_input("Ask anything that's troubling you...")
+    st.caption(f"Model: {model}")
 
     if st.form_submit_button("Ask"):
-        st.write("Here's an analysis to your issue:")
 
         with st.spinner("Finding the optimal solution to your issue..."):
             response = get_response(user_input)
+            st.write("Here's an analysis to your issue:")
 
             # UI for displaying response results
             with st.expander(label="Pros"):
