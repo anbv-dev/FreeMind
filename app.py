@@ -13,6 +13,21 @@ with st.form(key="prompt_window"):
     user_input = st.text_input("Ask anything that's troubling you...")
 
     if st.form_submit_button("Ask"):
-        print("button pressed")
+        st.write("Here's an analysis to your issue:")
+
         with st.spinner("Finding the optimal solution to your issue..."):
-            st.write(get_response(user_input))
+            response = get_response(user_input)
+
+            with st.expander(label="Pros"):
+                for line in response['pros']:
+                    st.write(line)
+
+            with st.expander(label="Cons"):
+                for line in response['cons']:
+                    st.write(line)
+
+            with st.expander(label="Blind Spot"):
+                st.write(response['blind_spot'])
+
+            with st.expander(label="Advice"):
+                st.write(response['advice'])
