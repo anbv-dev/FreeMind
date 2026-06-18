@@ -1,8 +1,10 @@
 import streamlit as st
 from decision_engine import get_response
 
+# Page title and favicon
 st.set_page_config(page_title="FreeMind", page_icon="./source/favicon.ico")
 
+# UI:
 st.title("Free:red[Mind]")
 st.write("_AI App that helps you make complex decisions with ease_")
 
@@ -18,6 +20,7 @@ with st.form(key="prompt_window"):
         with st.spinner("Finding the optimal solution to your issue..."):
             response = get_response(user_input)
 
+            # UI for displaying response results
             with st.expander(label="Pros"):
                 for line in response['pros']:
                     st.write(line)
