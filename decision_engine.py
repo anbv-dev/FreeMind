@@ -1,4 +1,3 @@
-import os
 from dotenv import load_dotenv
 from google import genai
 from pydantic import BaseModel
@@ -7,7 +6,7 @@ import json
 # Parsing API Key Securely
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+client = genai.Client()
 
 # Response Schema for JSON output
 class ResponseFormat(BaseModel):
